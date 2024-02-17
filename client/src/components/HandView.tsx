@@ -1,6 +1,9 @@
 import { CSSProperties, FC } from "react";
 import { Hand } from "../types";
 
+const CARD_WIDTH = "5vw";
+const CARD_SPACING = "1vw";
+
 type Props = {
   hand: Hand;
   style?: CSSProperties;
@@ -14,10 +17,12 @@ const HandView: FC<Props> = ({ hand, style }) => {
           src={`/${card.suit}_${card.rank}.svg`}
           style={{
             display: "block",
-            width: "5vw",
+            width: CARD_WIDTH,
             position: "absolute",
-            top: `${1 * i}vw`,
-            left: `${1 * i}vw`,
+            top: `calc(${i} * ${CARD_SPACING})`,
+            left: `calc(${i} * ${CARD_SPACING} + 50% - ${CARD_WIDTH} / 2 - ${
+              hand.length - 1
+            } * ${CARD_SPACING} / 2)`,
           }}
         />
       ))}
