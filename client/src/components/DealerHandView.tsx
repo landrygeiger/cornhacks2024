@@ -23,6 +23,7 @@ const DealerHandView: FC<Props> = ({ hand, style }) => {
           src={`/${card.suit}_${card.rank}.svg`}
           style={{
             width: "5vw",
+            boxShadow: "0.2em 0.2em 0.2em rgba(0, 0, 0, .2)",
           }}
         />
       ))}

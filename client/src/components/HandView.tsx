@@ -23,6 +23,7 @@ const HandView: FC<Props> = ({ hand, style }) => {
             left: `calc(${i} * ${CARD_SPACING} + 50% - ${CARD_WIDTH} / 2 - ${
               hand.length - 1
             } * ${CARD_SPACING} / 2)`,
+            boxShadow: "0.2em 0.2em 0.2em rgba(0, 0, 0, .2)",
           }}
         />
       ))}
