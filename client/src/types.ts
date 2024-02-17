@@ -5,10 +5,10 @@ export type Rank = "ace" | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | "jack" | "king" 
 
 export type Card = {
   suit: Suit;
-  value: Rank;
+  rank: Rank;
 };
 
-type Hand = Card[];
+export type Hand = Card[];
 
 export type EncodedFrame = {
   dealer: Hand;
