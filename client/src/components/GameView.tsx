@@ -26,6 +26,11 @@ const GameView: FC = () => {
     <div
       style={{
         height: "100vh",
+        position: "absolute",
+        width: "100%",
+        top: 0,
+        bottom: 0,
+        zIndex: 1,
         display: "flex",
         flexDirection: "column",
         margin: 0,
