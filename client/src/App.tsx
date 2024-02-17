@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Video } from "./Video";
+import { Video } from "./components/Video";
 import { AppState } from "./types";
 import {
   incrementNumDecksBy,
