@@ -6,7 +6,15 @@ type Props = {
 
 export const Video = ({ videoRef }: Props) => {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        position: "absolute",
+        zIndex: -1,
+        width: "100%",
+      }}
+    >
       <div
         style={{
           position: "relative",

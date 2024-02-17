@@ -32,20 +32,27 @@ const App = () => {
       });
   }, []);
 
-  return appState.kind === "setup" ? (
+  return (
     <div>
       <Video videoRef={videoRef} />
-      <button onClick={() => incrementNumDecksBy(setAppState)(1)}>+</button>
-      <div>{appState.numDecks}</div>
-      <button onClick={() => incrementNumDecksBy(setAppState)(-1)}>-</button>
-      <button onClick={() => setAppState(initialPlayState(appState.numDecks))}>
-        start
-      </button>
-    </div>
-  ) : (
-    <div>
-      <Video videoRef={videoRef} />
-      <button onClick={() => setAppState(initialSetupState)}>reset</button>
+      {appState.kind === "setup" ? (
+        <div>
+          <button onClick={() => incrementNumDecksBy(setAppState)(1)}>+</button>
+          <div>{appState.numDecks}</div>
+          <button onClick={() => incrementNumDecksBy(setAppState)(-1)}>
+            -
+          </button>
+          <button
+            onClick={() => setAppState(initialPlayState(appState.numDecks))}
+          >
+            start
+          </button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={() => setAppState(initialSetupState)}>reset</button>
+        </div>
+      )}
     </div>
   );
 };
