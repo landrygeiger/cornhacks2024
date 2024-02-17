@@ -1,13 +1,14 @@
-import { FC } from "react";
+import { CSSProperties, FC } from "react";
 import { Hand } from "../types";
 
 type Props = {
   hand: Hand;
+  style?: CSSProperties;
 };
 
-const HandView: FC<Props> = ({ hand }) => {
+const HandView: FC<Props> = ({ hand, style }) => {
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", ...style }}>
       {hand.map((card, i) => (
         <img
           src={`/${card.suit}_${card.rank}.svg`}
