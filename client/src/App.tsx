@@ -1,3 +1,4 @@
+import DealerHandView from "./components/DealerHandView";
 import HandView from "./components/HandView";
 import { Hand } from "./types";
 
@@ -22,8 +23,10 @@ const p3Hand: Hand = [
 const App = () => {
   return (
     <>
-      {" "}
-      <h1>Hello World!</h1>
+      <DealerHandView
+        hand={p1Hand}
+        style={{ marginLeft: "auto", marginRight: "auto" }}
+      />
       <div
         style={{
           display: "flex",
