@@ -6,6 +6,7 @@ import {
   initialPlayState,
   initialSetupState,
 } from "./utils";
+import GameView from "./components/GameView";
 
 const App = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -33,27 +34,48 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <Video videoRef={videoRef} />
-      {appState.kind === "setup" ? (
-        <div>
-          <button onClick={() => incrementNumDecksBy(setAppState)(1)}>+</button>
-          <div>{appState.numDecks}</div>
-          <button onClick={() => incrementNumDecksBy(setAppState)(-1)}>
-            -
-          </button>
-          <button
-            onClick={() => setAppState(initialPlayState(appState.numDecks))}
-          >
-            start
-          </button>
+    <>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "inline-block",
+            position: "relative",
+            height: "100vh",
+          }}
+        >
+          <Video videoRef={videoRef} />
+          {appState.kind === "setup" ? (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "50%",
+                width: "100%",
+              }}
+            >
+              <button onClick={() => incrementNumDecksBy(setAppState)(1)}>
+                +
+              </button>
+              <div>{appState.numDecks}</div>
+              <button onClick={() => incrementNumDecksBy(setAppState)(-1)}>
+                -
+              </button>
+              <button
+                onClick={() => setAppState(initialPlayState(appState.numDecks))}
+              >
+                start
+              </button>
+            </div>
+          ) : (
+            <GameView />
+          )}
         </div>
-      ) : (
-        <div>
-          <button onClick={() => setAppState(initialSetupState)}>reset</button>
-        </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
