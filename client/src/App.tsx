@@ -22,7 +22,7 @@ const App = () => {
     });
   }, []);
 
-  return <video ref={videoRef} style={{ width: "100%" }} autoPlay />;
+  return <video ref={videoRef} style={{ width: "100%" }} controls />;
 };
 
 export default App;
