@@ -10,8 +10,9 @@ export const Video = ({ videoRef }: Props) => {
       <video
         ref={videoRef}
         style={{ width: "100%", display: "block" }}
-        // autoPlay
-        controls
+        playsInline
+        autoPlay
+        muted
       />
       <div className="vertical-line-left"></div>
       <div className="vertical-line-right"></div>
