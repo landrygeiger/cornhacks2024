@@ -15,6 +15,7 @@ const DealerHandView: FC<Props> = ({ hand, style }) => {
         alignItems: "center",
         gap: "1vw",
         ...style,
+        margin: 0,
       }}
     >
       {hand.map(card => (

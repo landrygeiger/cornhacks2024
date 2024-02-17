@@ -23,16 +23,30 @@ const p3Hand: Hand = [
 
 const GameView: FC = () => {
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        margin: 0,
+      }}
+    >
       <DealerHandView
         hand={p1Hand}
-        style={{ marginLeft: "auto", marginRight: "auto", flexGrow: 1 }}
+        style={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          flexGrow: 1,
+          flexBasis: 0,
+        }}
       />
       <div
         style={{
           display: "flex",
           justifyContent: "space-around",
           flexGrow: 1,
+          flexBasis: 0,
+          margin: 0,
         }}
       >
         <HandView hand={p1Hand} style={{ flexGrow: 1 }} />
