@@ -1,10 +1,10 @@
 import "./video.css";
 
-export const Video = ({
-  videoRef,
-}: {
+type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
-}) => {
+};
+
+export const Video = ({ videoRef }: Props) => {
   return (
     <div style={{ position: "relative", width: "fit-content" }}>
       <video
