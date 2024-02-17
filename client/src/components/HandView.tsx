@@ -19,7 +19,7 @@ const HandView: FC<Props> = ({ hand, style }) => {
             display: "block",
             width: CARD_WIDTH,
             position: "absolute",
-            top: `calc(${i} * ${CARD_SPACING})`,
+            top: `calc(${i} * ${CARD_SPACING} + 10vh)`,
             left: `calc(${i} * ${CARD_SPACING} + 50% - ${CARD_WIDTH} / 2 - ${
               hand.length - 1
             } * ${CARD_SPACING} / 2)`,

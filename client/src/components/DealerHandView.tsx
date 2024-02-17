@@ -12,6 +12,7 @@ const DealerHandView: FC<Props> = ({ hand, style }) => {
       style={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         gap: "1vw",
         ...style,
       }}
