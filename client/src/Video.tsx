@@ -6,11 +6,12 @@ type Props = {
 
 export const Video = ({ videoRef }: Props) => {
   return (
-    <div style={{ position: "relative", width: "fit-content" }}>
+    <div style={{ position: "relative", width: "300px" }}>
       <video
         ref={videoRef}
         style={{ width: "100%", display: "block" }}
-        autoPlay
+        // autoPlay
+        controls
       />
       <div className="vertical-line-left"></div>
       <div className="vertical-line-right"></div>
