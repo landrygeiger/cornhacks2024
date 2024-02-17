@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Video } from "./Video";
 
 const App = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -24,7 +25,7 @@ const App = () => {
       });
   }, []);
 
-  return <video ref={videoRef} style={{ width: "100%" }} controls />;
+  return <Video videoRef={videoRef} />;
 };
 
 export default App;
