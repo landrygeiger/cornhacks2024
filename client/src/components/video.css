@@ -1,0 +1,32 @@
+.vertical-line-left {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  left: 33%;
+  transform: translateX(-50%);
+  width: 2px;
+  background-color: white;
+  z-index: 10;
+}
+
+.vertical-line-right {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  left: 66%;
+  transform: translateX(-50%);
+  width: 2px;
+  background-color: white;
+  z-index: 10;
+}
+
+.horizontal-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 2px;
+  background-color: white;
+  z-index: 10;
+}
