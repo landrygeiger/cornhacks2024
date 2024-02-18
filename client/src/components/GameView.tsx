@@ -1,7 +1,11 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import DealerHandView from "./DealerHandView";
-import HandView from "./HandView";
-import { HandWithPrescription } from "../types";
+import PlayerView from "./PlayerView";
+import { AppState, HandWithPrescription } from "../types";
+import TrueCountView from "./TrueCountView";
+import { Button } from "@mui/joy";
+import { RestartAltOutlined } from "@mui/icons-material";
+import { initialSetupState } from "../utils";
 
 const p1Hand: HandWithPrescription[] = [
   {
@@ -13,13 +17,13 @@ const p1Hand: HandWithPrescription[] = [
     ],
     prescription: "stand",
   },
-  {
-    hand: [
-      { suit: "clubs", rank: "queen" },
-      { suit: "diamonds", rank: "jack" },
-    ],
-    prescription: "hit",
-  },
+  // {
+  //   hand: [
+  //     { suit: "clubs", rank: "queen" },
+  //     { suit: "diamonds", rank: "jack" },
+  //   ],
+  //   prescription: "hit",
+  // },
 ];
 
 const p2Hand: HandWithPrescription[] = [
@@ -43,7 +47,11 @@ const p3Hand: HandWithPrescription[] = [
   },
 ];
 
-const GameView: FC = () => {
+type Props = {
+  setAppState: Dispatch<SetStateAction<AppState>>;
+};
+
+const GameView: FC<Props> = ({ setAppState }) => {
   return (
     <div
       style={{
@@ -60,8 +68,6 @@ const GameView: FC = () => {
     >
       <div
         style={{
-          marginLeft: "auto",
-          marginRight: "auto",
           flexGrow: 1,
           flexBasis: 0,
           display: "flex",
@@ -70,7 +76,26 @@ const GameView: FC = () => {
           alignItems: "center",
         }}
       >
-        <div style={{ display: "flex" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignSelf: "stretch",
+            margin: "0.5em 0.5em",
+          }}
+        >
+          <TrueCountView trueCount={-3.2} />
+          <Button
+            size="sm"
+            color="danger"
+            variant="soft"
+            startDecorator={<RestartAltOutlined fontSize="small" />}
+            onClick={() => setAppState(initialSetupState)}
+          >
+            Reset
+          </Button>
+        </div>
+        <div style={{ display: "flex", flexGrow: 1 }}>
           <DealerHandView hand={p1Hand[0].hand} />
         </div>
       </div>
@@ -83,9 +108,9 @@ const GameView: FC = () => {
           margin: 0,
         }}
       >
-        <HandView hands={p1Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <HandView hands={p2Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <HandView hands={p3Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p1Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p2Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p3Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
       </div>
     </div>
   );
