@@ -6,30 +6,49 @@ const CARD_HEIGHT = "7.12vw";
 const CARD_SPACING = "1vw";
 
 type Props = {
-  hand: Hand;
+  hands: Hand[];
   style?: CSSProperties;
 };
 
-const HandView: FC<Props> = ({ hand, style }) => {
+const handWidthCssCalcStr = (hand: Hand) =>
+  `calc(${CARD_WIDTH} + ${hand.length - 1} * ${CARD_SPACING})`;
+
+const handHeightCssCalcStr = (hand: Hand) =>
+  `calc(${CARD_HEIGHT} + ${hand.length - 1} * ${CARD_SPACING})`;
+
+const HandView: FC<Props> = ({ hands, style }) => {
   return (
-    <div style={{ position: "relative", ...style }}>
-      {hand.map((card, i) => (
-        <img
-          src={`/${card.suit}_${card.rank}.svg`}
+    <div
+      style={{
+        display: "flex",
+        ...style,
+        alignItems: "center",
+        justifyContent: "space-around",
+      }}
+    >
+      {hands.map(hand => (
+        <div
           style={{
-            display: "block",
-            width: CARD_WIDTH,
-            height: CARD_HEIGHT,
-            position: "absolute",
-            top: `calc(${i} * ${CARD_SPACING} + 50% - ${CARD_HEIGHT} / 2 - ${
-              hand.length - 1
-            } * ${CARD_SPACING} / 2)`,
-            left: `calc(${i} * ${CARD_SPACING} + 50% - ${CARD_WIDTH} / 2 - ${
-              hand.length - 1
-            } * ${CARD_SPACING} / 2)`,
-            boxShadow: "0.2em 0.2em 0.2em rgba(0, 0, 0, .2)",
+            width: handWidthCssCalcStr(hand),
+            height: handHeightCssCalcStr(hand),
+            position: "relative",
           }}
-        />
+        >
+          {hand.map((card, i) => (
+            <img
+              src={`/${card.suit}_${card.rank}.svg`}
+              style={{
+                display: "block",
+                width: CARD_WIDTH,
+                height: CARD_HEIGHT,
+                position: "absolute",
+                top: `calc(${i} * ${CARD_SPACING}`,
+                left: `calc(${i} * ${CARD_SPACING}`,
+                boxShadow: "0.2em 0.2em 0.2em rgba(0, 0, 0, .2)",
+              }}
+            />
+          ))}
+        </div>
       ))}
     </div>
   );
