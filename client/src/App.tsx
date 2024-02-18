@@ -41,6 +41,7 @@ const App = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
+          backgroundColor: "black",
         }}
       >
         <div
@@ -51,6 +52,7 @@ const App = () => {
             borderRadius: "15px",
             // outline: "2px solid black",
             overflow: "hidden",
+            backgroundColor: "white",
           }}
         >
           <Video videoRef={videoRef} />
