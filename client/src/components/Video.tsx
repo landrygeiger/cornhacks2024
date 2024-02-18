@@ -10,7 +10,7 @@ export const Video = ({ videoRef }: Props) => {
       <video
         ref={videoRef}
         style={{
-          width: "100%",
+          // width: "100%",
           height: "100%",
           display: "block",
           opacity: "25%",
