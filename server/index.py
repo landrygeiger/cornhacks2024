@@ -182,7 +182,7 @@ async def get_data(websocket):
         await websocket.send(json.dumps(landry_func(message)))
 
 async def main():
-    async with serve(get_data, "184.105.6.45", 4444):
+    async with serve(get_data, "localhost", 4444):
         await asyncio.Future()
 
 print("starting server")
