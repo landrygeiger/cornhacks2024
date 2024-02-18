@@ -39,13 +39,12 @@ const App = () => {
             canvas.toBlob(blob => ws.send(blob!), "image/jpeg");
           }
         };
-        setInterval(() => {
+        setTimeout(() => {
           canvas.width = videoRef.current?.videoWidth!;
           canvas.height = videoRef.current?.videoHeight!;
           ctx?.drawImage(videoRef.current!, 0, 0, canvas.width, canvas.height);
           canvas.toBlob(blob => {
             ws.send(blob!);
-            console.log(blob);
           }, "image/jpeg");
         }, 2000);
 

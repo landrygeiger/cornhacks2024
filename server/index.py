@@ -1,4 +1,5 @@
 import asyncio
+import json
 from websockets.server import serve
 from PIL import Image
 import base64
@@ -36,8 +37,99 @@ def get_data_from_image(image_bytes):
     p3_right_img = img.crop(p3_right)
 
     dealer_img.save("./dealer.jpg")
-    cv.imwrite("./dealer-2.jpg", cv.imread("./dealer.jpg"))
-    dealer_cards = zach_func(cv.imread("./test_inputs/two_cards.jpg"))
+    p1_left_img.save("./p1_left.jpg")
+    p1_right_img.save("./p1_right.jpg")
+    p2_left_img.save("./p2_left.jpg")
+    p2_right_img.save("./p2_right.jpg")
+    p3_left_img.save("./p3_left.jpg")
+    p3_right_img.save("./p3_right.jpg")
+
+    dealer_cards = zach_func(cv.imread("./dealer.jpg"))
+    p1_left_cards = zach_func(cv.imread("./p1_left.jpg"))
+    p1_right_cards = zach_func(cv.imread("./p1_right.jpg"))
+    p2_left_cards = zach_func(cv.imread("./p2_left.jpg"))
+    p2_right_cards = zach_func(cv.imread("./p2_right.jpg"))
+    p3_left_cards = zach_func(cv.imread("./p3_left.jpg"))
+    p3_right_cards = zach_func(cv.imread("./p3_right.jpg"))
+
+    def card_translator(card_code):
+      codes = {
+      'AH': {'suit': "hearts", 'rank': "ace"},
+    '2H': {'suit': "hearts", 'rank': "2"},
+    '3H': {'suit': "hearts", 'rank': "3"},
+    '4H': {'suit': "hearts", 'rank': "4"},
+    '5H': {'suit': "hearts", 'rank': "5"},
+    '6H': {'suit': "hearts", 'rank': "6"},
+    '7H': {'suit': "hearts", 'rank': "7"},
+    '8H': {'suit': "hearts", 'rank': "8"},
+    '9H': {'suit': "hearts", 'rank': "9"},
+    '10H': {'suit': "hearts", 'rank': "10"},
+    'JH': {'suit': "hearts", 'rank': "jack"},
+    'QH': {'suit': "hearts", 'rank': "queen"},
+    'KH': {'suit': "hearts", 'rank': "king"},
+    'AD': {'suit': "diamonds", 'rank': "ace"},
+    '2D': {'suit': "diamonds", 'rank': "2"},
+    '3D': {'suit': "diamonds", 'rank': "3"},
+    '4D': {'suit': "diamonds", 'rank': "4"},
+    '5D': {'suit': "diamonds", 'rank': "5"},
+    '6D': {'suit': "diamonds", 'rank': "6"},
+    '7D': {'suit': "diamonds", 'rank': "7"},
+    '8D': {'suit': "diamonds", 'rank': "8"},
+    '9D': {'suit': "diamonds", 'rank': "9"},
+    '10D': {'suit': "diamonds", 'rank': "10"},
+    'JD': {'suit': "diamonds", 'rank': "jack"},
+    'QD': {'suit': "diamonds", 'rank': "queen"},
+    'KD': {'suit': "diamonds", 'rank': "king"},
+    'AC': {'suit': "clubs", 'rank': "ace"},
+    '2C': {'suit': "clubs", 'rank': "2"},
+    '3C': {'suit': "clubs", 'rank': "3"},
+    '4C': {'suit': "clubs", 'rank': "4"},
+    '5C': {'suit': "clubs", 'rank': "5"},
+    '6C': {'suit': "clubs", 'rank': "6"},
+    '7C': {'suit': "clubs", 'rank': "7"},
+    '8C': {'suit': "clubs", 'rank': "8"},
+    '9C': {'suit': "clubs", 'rank': "9"},
+    '10C': {'suit': "clubs", 'rank': "10"},
+    'JC': {'suit': "clubs", 'rank': "jack"},
+    'QC': {'suit': "clubs", 'rank': "queen"},
+    'KC': {'suit': "clubs", 'rank': "king"},
+    'AS': {'suit': "spades", 'rank': "ace"},
+    '2S': {'suit': "spades", 'rank': "2"},
+    '3S': {'suit': "spades", 'rank': "3"},
+    '4S': {'suit': "spades", 'rank': "4"},
+    '5S': {'suit': "spades", 'rank': "5"},
+    '6S': {'suit': "spades", 'rank': "6"},
+    '7S': {'suit': "spades", 'rank': "7"},
+    '8S': {'suit': "spades", 'rank': "8"},
+    '9S': {'suit': "spades", 'rank': "9"},
+    '10S': {'suit': "spades", 'rank': "10"},
+    'JS': {'suit': "spades", 'rank': "jack"},
+    'QS': {'suit': "spades", 'rank': "queen"},
+    'KS': {'suit': "spades", 'rank': "king"}
+      }
+      return codes[card_code]
+
+    result = {}
+    result["dealer"] = list(map(card_translator, dealer_cards))
+    result["player1"] = []
+    if p1_left_cards:
+      result["player1"].append(list(map(card_translator, p1_left_cards)))
+    if p1_right_cards:
+      result["player1"].append(list(map(card_translator, p1_right_cards)))
+
+    result["player2"] = []
+    if p2_left_cards:
+      result["player2"].append(list(map(card_translator, p2_left_cards)))
+    if p2_right_cards:
+      result["player2"].append(list(map(card_translator, p2_right_cards)))
+
+    result["player3"] = []
+    if p3_left_cards:
+      result["player2"].append(list(map(card_translator, p3_left_cards)))
+    if p3_right_cards:
+      result["player2"].append(list(map(card_translator, p3_right_cards)))
+
+    return result
 
     # p1_left_cards = zach_func(p1_left_img)
     # p1_right_cards = zach_func(p1_right_img)
@@ -48,7 +140,7 @@ def get_data_from_image(image_bytes):
 
 async def get_data(websocket):
     async for message in websocket:
-        get_data_from_image(message)
+        await websocket.send(json.dumps(get_data_from_image(message)))
 
 async def main():
     async with serve(get_data, "localhost", 4444):
