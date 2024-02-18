@@ -42,12 +42,15 @@ def landry_func(image_bytes):
     p1_cards = model.infer(image="./p1.jpg")
     p2_cards = model.infer(image="./p2.jpg")
     p3_cards = model.infer(image="./p3.jpg")
+    test_inputs = model.infer(image="./test_inputs/two_cards.jpg")
 
     print("dealer", dealer_cards)
 
     print("p1 stuff", p1_cards)
     print("p2 stuff", p2_cards)
     print("p3 stuff", p3_cards)
+
+    print("test stuff", test_inputs)
 
     return "yooo"
 
