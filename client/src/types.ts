@@ -20,11 +20,20 @@ export type EncodedFrame = {
 
 type SimulatedGameState = EncodedFrame;
 
-export type AppState =
-  | { kind: "setup"; numDecks: number }
-  | {
-      kind: "play";
-      numDecks: number;
-      cardsSeen: Card[];
-      simulatedGameState: SimulatedGameState;
-    };
+export type AppState = SetupAppState | PlayAppState;
+
+export type SetupAppState = { kind: "setup"; numDecks: number };
+
+export type PlayAppState = {
+  kind: "play";
+  numDecks: number;
+  cardsSeen: Card[];
+  simulatedGameState: SimulatedGameState;
+};
+
+export type Prescription = "stand" | "split" | "hit" | "double down";
+
+export type HandWithPrescription = {
+  hand: Hand;
+  prescription: Prescription | undefined;
+};

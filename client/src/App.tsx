@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Video } from "./components/Video";
 import { AppState } from "./types";
-import {
-  assimilateUpdatedState,
-  incrementNumDecksBy,
-  initialPlayState,
-  initialSetupState,
-} from "./utils";
+import { assimilateUpdatedState, initialSetupState } from "./utils";
 import GameView from "./components/GameView";
+import DeckCountSelector from "./components/DeckCountSelector";
 
 const App = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -42,37 +38,14 @@ const App = () => {
             display: "inline-block",
             position: "relative",
             height: "100vh",
+            backgroundColor: "white",
           }}
         >
           <Video videoRef={videoRef} />
           {appState.kind === "setup" ? (
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "50%",
-                width: "100%",
-              }}
-            >
-              <button onClick={() => incrementNumDecksBy(setAppState)(1)}>
-                +
-              </button>
-              <div>{appState.numDecks}</div>
-              <button onClick={() => incrementNumDecksBy(setAppState)(-1)}>
-                -
-              </button>
-              <button
-                onClick={() => setAppState(initialPlayState(appState.numDecks))}
-              >
-                start
-              </button>
-            </div>
+            <DeckCountSelector appState={appState} setAppState={setAppState} />
           ) : (
-            <GameView />
+            <GameView setAppState={setAppState} />
           )}
         </div>
       </div>
