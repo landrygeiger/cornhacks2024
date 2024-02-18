@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from "react";
 import { Hand } from "../types";
-import { Chip } from "@mui/joy";
+import { Card, Chip } from "@mui/joy";
 import { LightbulbOutlined } from "@mui/icons-material";
 
 const CARD_WIDTH = "7vw";
@@ -8,6 +8,7 @@ const CARD_HEIGHT = "9.96vw";
 const CARD_SPACING = "1vw";
 
 type Props = {
+  playerNumber: number;
   hands: Hand[];
   style?: CSSProperties;
 };
@@ -18,7 +19,7 @@ const handWidthCssCalcStr = (hand: Hand) =>
 const handHeightCssCalcStr = (hand: Hand) =>
   `calc(${CARD_HEIGHT} + ${hand.length - 1} * ${CARD_SPACING})`;
 
-const HandView: FC<Props> = ({ hands, style }) => {
+const HandView: FC<Props> = ({ playerNumber, hands, style }) => {
   return (
     <div
       style={{
@@ -73,6 +74,12 @@ const HandView: FC<Props> = ({ hands, style }) => {
           </div>
         ))}
       </div>
+      <Card
+        size="sm"
+        sx={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
+      >
+        Player {playerNumber}
+      </Card>
     </div>
   );
 };

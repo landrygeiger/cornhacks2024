@@ -73,9 +73,21 @@ const GameView: FC = () => {
           margin: 0,
         }}
       >
-        <HandView hands={p1Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <HandView hands={p2Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <HandView hands={p3Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <HandView
+          hands={p1Hand}
+          style={{ flexGrow: 1, flexBasis: 0 }}
+          playerNumber={1}
+        />
+        <HandView
+          hands={p2Hand}
+          style={{ flexGrow: 1, flexBasis: 0 }}
+          playerNumber={2}
+        />
+        <HandView
+          hands={p3Hand}
+          style={{ flexGrow: 1, flexBasis: 0 }}
+          playerNumber={3}
+        />
       </div>
     </div>
   );
