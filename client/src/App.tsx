@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Video } from "./components/Video";
 import { AppState } from "./types";
-import { initialSetupState } from "./utils";
+import { assimilateUpdatedState, initialSetupState } from "./utils";
 import GameView from "./components/GameView";
 import DeckCountSelector from "./components/DeckCountSelector";
 
@@ -10,12 +10,21 @@ const App = () => {
   const [appState, setAppState] = useState<AppState>(initialSetupState);
 
   useEffect(() => {
+    // const ws = new WebSocket("ws://184.105.6.45:4444");
     const ws = new WebSocket("ws://localhost:4444");
-    // ws.onmessage = e => setAppState(assimilateUpdatedState(e.data));
-    ws.onmessage = console.log;
+    ws.onmessage = e => {
+      console.log(e);
+      setAppState(assimilateUpdatedState(e.data));
+    };
 
     navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: "environment" } })
+      .getUserMedia({
+        video: {
+          facingMode: "environment",
+          width: { ideal: 3840 },
+          height: { ideal: 2160 },
+        },
+      })
       .then(stream => {
         if (!videoRef.current) return;
         videoRef.current.srcObject = stream;
@@ -23,9 +32,9 @@ const App = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
 
-        ws.onmessage = e => {
-          console.log(e);
-          // setAppState(assimilateUpdatedState(e.data));
+        setInterval(() => {
+          canvas.width = videoRef.current?.videoWidth!;
+          canvas.height = videoRef.current?.videoHeight!;
           if (
             videoRef.current?.readyState === videoRef.current?.HAVE_ENOUGH_DATA
           ) {
@@ -36,26 +45,12 @@ const App = () => {
               canvas.width,
               canvas.height,
             );
-            canvas.toBlob(blob => ws.send(blob!), "image/jpeg");
+            canvas.toBlob(blob => {
+              console.log("ws sent", blob);
+              return ws.send(blob!);
+            }, "image/jpeg");
           }
-        };
-        setTimeout(() => {
-          canvas.width = videoRef.current?.videoWidth!;
-          canvas.height = videoRef.current?.videoHeight!;
-          ctx?.drawImage(videoRef.current!, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob(blob => {
-            ws.send(blob!);
-          }, "image/jpeg");
-        }, 2000);
-
-        // const mediaRecorder = new MediaRecorder(stream);
-        // mediaRecorder.ondataavailable = e => {
-        //   if (e.data.size > 0 && appState.kind === "play") {
-        //     e.data.arrayBuffer().then(x => ws.send(x));
-        //   }
-        // };
-
-        // mediaRecorder.start(100);
+        }, 1000);
       });
   }, []);
 
