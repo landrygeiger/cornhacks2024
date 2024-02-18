@@ -43,12 +43,20 @@ def landry_func(image_bytes):
     p2_cards = model.infer(image="./p2.jpg")
     p3_cards = model.infer(image="./p3.jpg")
 
-    return {
-      "dealer": dealer_cards.predictions,
-      "player1": p1_cards.predictions,
-      "player2": p2_cards.predictions,
-      "player3": p3_cards.predictions,
-    }
+    print("dealer", dealer_cards)
+
+    print("p1 stuff", p1_cards)
+    print("p2 stuff", p2_cards)
+    print("p3 stuff", p3_cards)
+
+    return "yooo"
+
+    # return {
+    #   "dealer": dealer_cards.predictions,
+    #   "player1": p1_cards.predictions,
+    #   "player2": p2_cards.predictions,
+    #   "player3": p3_cards.predictions,
+    # }
 
 def get_data_from_image(image_bytes):
     # Convert the image bytes to a PIL Image object
