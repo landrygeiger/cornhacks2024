@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-from Pillow import Image
+from PIL import Image
 
 def get_contours(image):
 
@@ -197,57 +197,72 @@ def identify_label_from_list(card_image, template_images):
     
     return best_match
 
-cards = {
-    'AH': cv.imread('./templates/hearts/AH.png', cv.IMREAD_GRAYSCALE),
-    '2H': cv.imread('./templates/hearts/2H.png', cv.IMREAD_GRAYSCALE),
-    '3H': cv.imread('./templates/hearts/3H.png', cv.IMREAD_GRAYSCALE),
-    '4H': cv.imread('./templates/hearts/4H.png', cv.IMREAD_GRAYSCALE),
-    '5H': cv.imread('./templates/hearts/5H.png', cv.IMREAD_GRAYSCALE),
-    '6H': cv.imread('./templates/hearts/6H.png', cv.IMREAD_GRAYSCALE),
-    '7H': cv.imread('./templates/hearts/7H.png', cv.IMREAD_GRAYSCALE),
-    '8H': cv.imread('./templates/hearts/8H.png', cv.IMREAD_GRAYSCALE),
-    '9H': cv.imread('./templates/hearts/9H.png', cv.IMREAD_GRAYSCALE),
-    '10H': cv.imread('./templates/hearts/10H.png', cv.IMREAD_GRAYSCALE),
-    'JH': cv.imread('./templates/hearts/JH.png', cv.IMREAD_GRAYSCALE),
-    'QH': cv.imread('./templates/hearts/QH.png', cv.IMREAD_GRAYSCALE),
-    'KH': cv.imread('./templates/hearts/KH.png', cv.IMREAD_GRAYSCALE),
-    'AD': cv.imread('./templates/diamonds/AD.png', cv.IMREAD_GRAYSCALE),
-    '2D': cv.imread('./templates/diamonds/2D.png', cv.IMREAD_GRAYSCALE),
-    '3D': cv.imread('./templates/diamonds/3D.png', cv.IMREAD_GRAYSCALE),
-    '4D': cv.imread('./templates/diamonds/4D.png', cv.IMREAD_GRAYSCALE),
-    '5D': cv.imread('./templates/diamonds/5D.png', cv.IMREAD_GRAYSCALE),
-    '6D': cv.imread('./templates/diamonds/6D.png', cv.IMREAD_GRAYSCALE),
-    '7D': cv.imread('./templates/diamonds/7D.png', cv.IMREAD_GRAYSCALE),
-    '8D': cv.imread('./templates/diamonds/8D.png', cv.IMREAD_GRAYSCALE),
-    '9D': cv.imread('./templates/diamonds/9D.png', cv.IMREAD_GRAYSCALE),
-    '10D': cv.imread('./templates/diamonds/10D.png', cv.IMREAD_GRAYSCALE),
-    'JD': cv.imread('./templates/diamonds/JD.png', cv.IMREAD_GRAYSCALE),
-    'QD': cv.imread('./templates/diamonds/QD.png', cv.IMREAD_GRAYSCALE),
-    'KD': cv.imread('./templates/diamonds/KD.png', cv.IMREAD_GRAYSCALE),
-    'AC': cv.imread('./templates/clubs/AC.png', cv.IMREAD_GRAYSCALE),
-    '2C': cv.imread('./templates/clubs/2C.png', cv.IMREAD_GRAYSCALE),
-    '3C': cv.imread('./templates/clubs/3C.png', cv.IMREAD_GRAYSCALE),
-    '4C': cv.imread('./templates/clubs/4C.png', cv.IMREAD_GRAYSCALE),
-    '5C': cv.imread('./templates/clubs/5C.png', cv.IMREAD_GRAYSCALE),
-    '6C': cv.imread('./templates/clubs/6C.png', cv.IMREAD_GRAYSCALE),
-    '7C': cv.imread('./templates/clubs/7C.png', cv.IMREAD_GRAYSCALE),
-    '8C': cv.imread('./templates/clubs/8C.png', cv.IMREAD_GRAYSCALE),
-    '9C': cv.imread('./templates/clubs/9C.png', cv.IMREAD_GRAYSCALE),
-    '10C': cv.imread('./templates/clubs/10C.png', cv.IMREAD_GRAYSCALE),
-    'JC': cv.imread('./templates/clubs/JC.png', cv.IMREAD_GRAYSCALE),
-    'QC': cv.imread('./templates/clubs/QC.png', cv.IMREAD_GRAYSCALE),
-    'KC': cv.imread('./templates/spades/KC.png', cv.IMREAD_GRAYSCALE),
-    'AS': cv.imread('./templates/spades/AS.png', cv.IMREAD_GRAYSCALE),
-    '2S': cv.imread('./templates/spades/2S.png', cv.IMREAD_GRAYSCALE),
-    '3S': cv.imread('./templates/spades/3S.png', cv.IMREAD_GRAYSCALE),
-    '4S': cv.imread('./templates/spades/4S.png', cv.IMREAD_GRAYSCALE),
-    '5S': cv.imread('./templates/spades/5S.png', cv.IMREAD_GRAYSCALE),
-    '6S': cv.imread('./templates/spades/6S.png', cv.IMREAD_GRAYSCALE),
-    '7S': cv.imread('./templates/spades/7S.png', cv.IMREAD_GRAYSCALE),
-    '8S': cv.imread('./templates/spades/8S.png', cv.IMREAD_GRAYSCALE),
-    '9S': cv.imread('./templates/spades/9S.png', cv.IMREAD_GRAYSCALE),
-    '10S': cv.imread('./templates/spades/10S.png', cv.IMREAD_GRAYSCALE),
-    'JS': cv.imread('./templates/spades/JS.png', cv.IMREAD_GRAYSCALE),
-    'QS': cv.imread('./templates/spades/QS.png', cv.IMREAD_GRAYSCALE),
-    'KS': cv.imread('./templates/spades/KS.png', cv.IMREAD_GRAYSCALE),
-}
+
+
+def create_prediction_from_image(image):
+
+  cards = {
+      'AH': cv.imread('./templates/hearts/AH.jpg', cv.IMREAD_GRAYSCALE),
+      '2H': cv.imread('./templates/hearts/2H.jpg', cv.IMREAD_GRAYSCALE),
+      '3H': cv.imread('./templates/hearts/3H.jpg', cv.IMREAD_GRAYSCALE),
+      '4H': cv.imread('./templates/hearts/4H.jpg', cv.IMREAD_GRAYSCALE),
+      '5H': cv.imread('./templates/hearts/5H.jpg', cv.IMREAD_GRAYSCALE),
+      '6H': cv.imread('./templates/hearts/6H.jpg', cv.IMREAD_GRAYSCALE),
+      '7H': cv.imread('./templates/hearts/7H.jpg', cv.IMREAD_GRAYSCALE),
+      '8H': cv.imread('./templates/hearts/8H.jpg', cv.IMREAD_GRAYSCALE),
+      '9H': cv.imread('./templates/hearts/9H.jpg', cv.IMREAD_GRAYSCALE),
+      '10H': cv.imread('./templates/hearts/10H.jpg', cv.IMREAD_GRAYSCALE),
+      'JH': cv.imread('./templates/hearts/JH.jpg', cv.IMREAD_GRAYSCALE),
+      'QH': cv.imread('./templates/hearts/QH.jpg', cv.IMREAD_GRAYSCALE),
+      'KH': cv.imread('./templates/hearts/KH.jpg', cv.IMREAD_GRAYSCALE),
+      'AD': cv.imread('./templates/diamonds/AD.jpg', cv.IMREAD_GRAYSCALE),
+      '2D': cv.imread('./templates/diamonds/2D.jpg', cv.IMREAD_GRAYSCALE),
+      '3D': cv.imread('./templates/diamonds/3D.jpg', cv.IMREAD_GRAYSCALE),
+      '4D': cv.imread('./templates/diamonds/4D.jpg', cv.IMREAD_GRAYSCALE),
+      '5D': cv.imread('./templates/diamonds/5D.jpg', cv.IMREAD_GRAYSCALE),
+      '6D': cv.imread('./templates/diamonds/6D.jpg', cv.IMREAD_GRAYSCALE),
+      '7D': cv.imread('./templates/diamonds/7D.jpg', cv.IMREAD_GRAYSCALE),
+      '8D': cv.imread('./templates/diamonds/8D.jpg', cv.IMREAD_GRAYSCALE),
+      '9D': cv.imread('./templates/diamonds/9D.jpg', cv.IMREAD_GRAYSCALE),
+      '10D': cv.imread('./templates/diamonds/10D.jpg', cv.IMREAD_GRAYSCALE),
+      'JD': cv.imread('./templates/diamonds/JD.jpg', cv.IMREAD_GRAYSCALE),
+      'QD': cv.imread('./templates/diamonds/QD.jpg', cv.IMREAD_GRAYSCALE),
+      'KD': cv.imread('./templates/diamonds/KD.jpg', cv.IMREAD_GRAYSCALE),
+      'AC': cv.imread('./templates/clubs/AC.jpg', cv.IMREAD_GRAYSCALE),
+      '2C': cv.imread('./templates/clubs/2C.jpg', cv.IMREAD_GRAYSCALE),
+      '3C': cv.imread('./templates/clubs/3C.jpg', cv.IMREAD_GRAYSCALE),
+      '4C': cv.imread('./templates/clubs/4C.jpg', cv.IMREAD_GRAYSCALE),
+      '5C': cv.imread('./templates/clubs/5C.jpg', cv.IMREAD_GRAYSCALE),
+      '6C': cv.imread('./templates/clubs/6C.jpg', cv.IMREAD_GRAYSCALE),
+      '7C': cv.imread('./templates/clubs/7C.jpg', cv.IMREAD_GRAYSCALE),
+      '8C': cv.imread('./templates/clubs/8C.jpg', cv.IMREAD_GRAYSCALE),
+      '9C': cv.imread('./templates/clubs/9C.jpg', cv.IMREAD_GRAYSCALE),
+      '10C': cv.imread('./templates/clubs/10C.jpg', cv.IMREAD_GRAYSCALE),
+      'JC': cv.imread('./templates/clubs/JC.jpg', cv.IMREAD_GRAYSCALE),
+      'QC': cv.imread('./templates/clubs/QC.jpg', cv.IMREAD_GRAYSCALE),
+      'KC': cv.imread('./templates/clubs/KC.jpg', cv.IMREAD_GRAYSCALE),
+      'AS': cv.imread('./templates/spades/AS.jpg', cv.IMREAD_GRAYSCALE),
+      '2S': cv.imread('./templates/spades/2S.jpg', cv.IMREAD_GRAYSCALE),
+      '3S': cv.imread('./templates/spades/3S.jpg', cv.IMREAD_GRAYSCALE),
+      '4S': cv.imread('./templates/spades/4S.jpg', cv.IMREAD_GRAYSCALE),
+      '5S': cv.imread('./templates/spades/5S.jpg', cv.IMREAD_GRAYSCALE),
+      '6S': cv.imread('./templates/spades/6S.jpg', cv.IMREAD_GRAYSCALE),
+      '7S': cv.imread('./templates/spades/7S.jpg', cv.IMREAD_GRAYSCALE),
+      '8S': cv.imread('./templates/spades/8S.jpg', cv.IMREAD_GRAYSCALE),
+      '9S': cv.imread('./templates/spades/9S.jpg', cv.IMREAD_GRAYSCALE),
+      '10S': cv.imread('./templates/spades/10S.jpg', cv.IMREAD_GRAYSCALE),
+      'JS': cv.imread('./templates/spades/JS.jpg', cv.IMREAD_GRAYSCALE),
+      'QS': cv.imread('./templates/spades/QS.jpg', cv.IMREAD_GRAYSCALE),
+      'KS': cv.imread('./templates/spades/KS.jpg', cv.IMREAD_GRAYSCALE),
+  }
+
+  intersection_groups= create_all_intersections_from_image(image)
+  images= orient_images_from_groups(image,intersection_groups)
+  results = []
+  for img in images:
+    crop_img = crop_array(img,0.25,0.15)
+    classification = identify_label_from_list(crop_img,cards)
+    results.append(classification)
+  return results
+
+
