@@ -39,6 +39,7 @@ def get_data_from_image(image_bytes):
 
 async def get_data(websocket):
     async for message in websocket:
+        print(message)
         get_data_from_image(message)
 
 async def main():
