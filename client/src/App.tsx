@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Video } from "./components/Video";
 import { AppState } from "./types";
-import { initialSetupState } from "./utils";
+import { assimilateUpdatedState, initialSetupState } from "./utils";
 import GameView from "./components/GameView";
 import DeckCountSelector from "./components/DeckCountSelector";
 
@@ -13,7 +13,13 @@ const App = () => {
     const ws = new WebSocket("ws://localhost:4444");
 
     navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: "environment" } })
+      .getUserMedia({
+        video: {
+          facingMode: "environment",
+          width: { ideal: 3840 },
+          height: { ideal: 2160 },
+        },
+      })
       .then(stream => {
         if (!videoRef.current) return;
         videoRef.current.srcObject = stream;
@@ -23,7 +29,7 @@ const App = () => {
 
         ws.onmessage = e => {
           console.log(e);
-          // setAppState(assimilateUpdatedState(e.data));
+          setAppState(assimilateUpdatedState(e.data));
           if (
             videoRef.current?.readyState === videoRef.current?.HAVE_ENOUGH_DATA
           ) {
@@ -72,7 +78,7 @@ const App = () => {
           {appState.kind === "setup" ? (
             <DeckCountSelector appState={appState} setAppState={setAppState} />
           ) : (
-            <GameView setAppState={setAppState} />
+            <GameView appState={appState} setAppState={setAppState} />
           )}
         </div>
       </div>

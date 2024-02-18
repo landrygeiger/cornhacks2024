@@ -2,6 +2,7 @@ export type Suit = "hearts" | "spades" | "diamonds" | "clubs";
 
 // prettier-ignore
 export type Rank = "ace" | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | "jack" | "king" | "queen";
+export type SimplifiedRank = "ace" | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | "ten";
 
 export type Card = {
   suit: Suit;
@@ -30,7 +31,12 @@ export type PlayAppState = {
   simulatedGameState: SimulatedGameState;
 };
 
-export type Prescription = "stand" | "split" | "hit" | "double down";
+export type Prescription =
+  | "stand"
+  | "split"
+  | "hit"
+  | "double/hit"
+  | "double/stand";
 
 export type HandWithPrescription = {
   hand: Hand;

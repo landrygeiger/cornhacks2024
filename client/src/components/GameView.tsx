@@ -1,57 +1,60 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import DealerHandView from "./DealerHandView";
 import PlayerView from "./PlayerView";
-import { AppState, HandWithPrescription } from "../types";
+import { AppState, PlayAppState } from "../types";
 import TrueCountView from "./TrueCountView";
 import { Button } from "@mui/joy";
 import { RestartAltOutlined } from "@mui/icons-material";
-import { initialSetupState } from "../utils";
-
-const p1Hand: HandWithPrescription[] = [
-  {
-    hand: [
-      { suit: "diamonds", rank: "king" },
-      { suit: "hearts", rank: 5 },
-      { suit: "clubs", rank: "ace" },
-      { suit: "diamonds", rank: 8 },
-    ],
-    prescription: "stand",
-  },
-  // {
-  //   hand: [
-  //     { suit: "clubs", rank: "queen" },
-  //     { suit: "diamonds", rank: "jack" },
-  //   ],
-  //   prescription: "hit",
-  // },
-];
-
-const p2Hand: HandWithPrescription[] = [
-  {
-    hand: [
-      { suit: "hearts", rank: "ace" },
-      { suit: "spades", rank: 8 },
-    ],
-    prescription: "double down",
-  },
-];
-
-const p3Hand: HandWithPrescription[] = [
-  {
-    hand: [
-      { suit: "diamonds", rank: 3 },
-      { suit: "clubs", rank: "queen" },
-      { suit: "hearts", rank: 9 },
-    ],
-    prescription: "split",
-  },
-];
+import {
+  getTrueCount,
+  initialSetupState,
+  prescribeHand,
+  simplifyRank,
+} from "../utils";
 
 type Props = {
   setAppState: Dispatch<SetStateAction<AppState>>;
+  appState: PlayAppState;
 };
 
-const GameView: FC<Props> = ({ setAppState }) => {
+const GameView: FC<Props> = ({ setAppState, appState }) => {
+  const dealerUp =
+    appState.simulatedGameState.dealer.length === 1 &&
+    appState.simulatedGameState.dealer[0];
+  const p1Hands = appState.simulatedGameState.player1.map(hand => ({
+    prescription: dealerUp
+      ? prescribeHand(
+          hand,
+          appState.numDecks,
+          appState.cardsSeen,
+          simplifyRank(dealerUp.rank),
+        )
+      : undefined,
+    hand,
+  }));
+  const p2Hands = appState.simulatedGameState.player2.map(hand => ({
+    prescription: dealerUp
+      ? prescribeHand(
+          hand,
+          appState.numDecks,
+          appState.cardsSeen,
+          simplifyRank(dealerUp.rank),
+        )
+      : undefined,
+    hand,
+  }));
+  const p3Hands = appState.simulatedGameState.player3.map(hand => ({
+    prescription: dealerUp
+      ? prescribeHand(
+          hand,
+          appState.numDecks,
+          appState.cardsSeen,
+          simplifyRank(dealerUp.rank),
+        )
+      : undefined,
+    hand,
+  }));
+
   return (
     <div
       style={{
@@ -85,7 +88,7 @@ const GameView: FC<Props> = ({ setAppState }) => {
           }}
         >
           <TrueCountView
-            trueCount={-3.2}
+            trueCount={getTrueCount(appState.numDecks, appState.cardsSeen)}
             sx={{
               boxShadow: "0.2em 0.2em 0.2em rgba(0,0,0, .2)",
             }}
@@ -104,7 +107,7 @@ const GameView: FC<Props> = ({ setAppState }) => {
           </Button>
         </div>
         <div style={{ display: "flex", flexGrow: 1 }}>
-          <DealerHandView hand={p1Hand[0].hand} />
+          <DealerHandView hand={appState.simulatedGameState.dealer} />
         </div>
       </div>
       <div
@@ -116,9 +119,9 @@ const GameView: FC<Props> = ({ setAppState }) => {
           margin: 0,
         }}
       >
-        <PlayerView hands={p1Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <PlayerView hands={p2Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <PlayerView hands={p3Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p1Hands} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p2Hands} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p3Hands} style={{ flexGrow: 1, flexBasis: 0 }} />
       </div>
     </div>
   );
