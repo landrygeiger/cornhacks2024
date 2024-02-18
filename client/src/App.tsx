@@ -11,6 +11,8 @@ const App = () => {
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:4444");
+    // ws.onmessage = e => setAppState(assimilateUpdatedState(e.data));
+    ws.onmessage = console.log;
 
     navigator.mediaDevices
       .getUserMedia({ video: { facingMode: "environment" } })
@@ -37,13 +39,12 @@ const App = () => {
             canvas.toBlob(blob => ws.send(blob!), "image/jpeg");
           }
         };
-        setInterval(() => {
+        setTimeout(() => {
           canvas.width = videoRef.current?.videoWidth!;
           canvas.height = videoRef.current?.videoHeight!;
           ctx?.drawImage(videoRef.current!, 0, 0, canvas.width, canvas.height);
           canvas.toBlob(blob => {
             ws.send(blob!);
-            console.log(blob);
           }, "image/jpeg");
         }, 2000);
 
@@ -73,7 +74,7 @@ const App = () => {
           {appState.kind === "setup" ? (
             <DeckCountSelector appState={appState} setAppState={setAppState} />
           ) : (
-            <GameView setAppState={setAppState} />
+            <GameView appState={appState} setAppState={setAppState} />
           )}
         </div>
       </div>
