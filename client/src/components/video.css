@@ -5,8 +5,8 @@
   left: calc(100% / 3);
   transform: translateX(-50%);
   width: 2px;
-  background-color: white;
-  z-index: 10;
+  background-color: #cfd7e1;
+  z-index: 1;
 }
 
 .vertical-line-right {
@@ -16,8 +16,8 @@
   left: calc(100% / 3 * 2);
   transform: translateX(-50%);
   width: 2px;
-  background-color: white;
-  z-index: 10;
+  background-color: #cfd7e1;
+  z-index: 1;
 }
 
 .horizontal-line {
@@ -27,6 +27,6 @@
   top: 50%;
   transform: translateY(-50%);
   height: 2px;
-  background-color: white;
-  z-index: 10;
+  background-color: #cfd7e1;
+  z-index: 1;
 }
