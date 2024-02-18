@@ -11,13 +11,34 @@ const App = () => {
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:4444");
-    ws.onmessage = e => setAppState(assimilateUpdatedState(e.data));
 
     navigator.mediaDevices
       .getUserMedia({ video: { facingMode: "environment" } })
       .then(stream => {
         if (!videoRef.current) return;
         videoRef.current.srcObject = stream;
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+
+        ws.onmessage = e => {
+          console.log(e);
+          // setAppState(assimilateUpdatedState(e.data));
+          if (
+            videoRef.current?.readyState === videoRef.current?.HAVE_ENOUGH_DATA
+          ) {
+            ctx?.drawImage(
+              videoRef.current!,
+              0,
+              0,
+              canvas.width,
+              canvas.height,
+            );
+            canvas.toBlob(blob => ws.send(blob!), "image/jpeg");
+          }
+        };
 
         const mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.ondataavailable = e => {
