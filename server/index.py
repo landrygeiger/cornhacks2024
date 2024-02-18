@@ -3,9 +3,12 @@ from websockets.server import serve
 from PIL import Image
 import base64
 import io
+from image_processing import create_prediction_from_image
+import numpy as np
+import cv2 as cv
 
 def zach_func(image):
-  return []
+  return create_prediction_from_image(image)
 
 def get_data_from_image(image_bytes):
     # Convert the image bytes to a PIL Image object
@@ -32,17 +35,19 @@ def get_data_from_image(image_bytes):
     p3_left_img = img.crop(p3_left)
     p3_right_img = img.crop(p3_right)
 
-    dealer_cards = zach_func(dealer_img)
-    p1_left_cards = zach_func(p1_left_img)
-    p1_right_cards = zach_func(p1_right_img)
-    p2_left_cards = zach_func(p2_left_img)
-    p2_right_cards = zach_func(p2_right_img)
-    p3_left_cards = zach_func(p3_left_img)
-    p3_right_cards = zach_func(p3_right_img)
+    dealer_img.save("./dealer.jpg")
+    cv.imwrite("./dealer-2.jpg", cv.imread("./dealer.jpg"))
+    dealer_cards = zach_func(cv.imread("./test_inputs/two_cards.jpg"))
+
+    # p1_left_cards = zach_func(p1_left_img)
+    # p1_right_cards = zach_func(p1_right_img)
+    # p2_left_cards = zach_func(p2_left_img)
+    # p2_right_cards = zach_func(p2_right_img)
+    # p3_left_cards = zach_func(p3_left_img)
+    # p3_right_cards = zach_func(p3_right_img)
 
 async def get_data(websocket):
     async for message in websocket:
-        print(message)
         get_data_from_image(message)
 
 async def main():

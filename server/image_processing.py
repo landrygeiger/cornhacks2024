@@ -257,6 +257,8 @@ def create_prediction_from_image(image):
   }
 
   intersection_groups= create_all_intersections_from_image(image)
+
+  print(len(intersection_groups))
   images= orient_images_from_groups(image,intersection_groups)
   results = []
   for img in images:
