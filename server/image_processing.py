@@ -186,3 +186,5 @@ def save_arrays_as_jpgs(arrays, directory, suit):
 
         # Save image as JPEG
         image.save(f"{directory}{i}{suit}.jpg")
+
+
