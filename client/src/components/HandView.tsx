@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from "react";
-import { Hand } from "../types";
-import { Card, Chip } from "@mui/joy";
+import { Hand, HandWithPrescription } from "../types";
+import { Chip } from "@mui/joy";
 import { LightbulbOutlined } from "@mui/icons-material";
 
 const CARD_WIDTH = "7vw";
@@ -8,8 +8,7 @@ const CARD_HEIGHT = "9.96vw";
 const CARD_SPACING = "1vw";
 
 type Props = {
-  playerNumber: number;
-  hands: Hand[];
+  hands: HandWithPrescription[];
   style?: CSSProperties;
 };
 
@@ -19,7 +18,7 @@ const handWidthCssCalcStr = (hand: Hand) =>
 const handHeightCssCalcStr = (hand: Hand) =>
   `calc(${CARD_HEIGHT} + ${hand.length - 1} * ${CARD_SPACING})`;
 
-const HandView: FC<Props> = ({ playerNumber, hands, style }) => {
+const HandView: FC<Props> = ({ hands: handWithPrescriptions, style }) => {
   return (
     <div
       style={{
@@ -38,18 +37,18 @@ const HandView: FC<Props> = ({ playerNumber, hands, style }) => {
           flexGrow: 1,
         }}
       >
-        {hands.map(hand => (
+        {handWithPrescriptions.map(handWithPrescription => (
           <div
             style={{
-              width: handWidthCssCalcStr(hand),
-              height: handHeightCssCalcStr(hand),
+              width: handWidthCssCalcStr(handWithPrescription.hand),
+              height: handHeightCssCalcStr(handWithPrescription.hand),
               position: "relative",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            {hand.map((card, i) => (
+            {handWithPrescription.hand.map((card, i) => (
               <img
                 src={`/${card.suit}_${card.rank}.svg`}
                 style={{
@@ -63,23 +62,19 @@ const HandView: FC<Props> = ({ playerNumber, hands, style }) => {
                 }}
               />
             ))}
-            <Chip
-              color="primary"
-              startDecorator={<LightbulbOutlined fontSize="small" />}
-              variant="soft"
-              sx={{ zIndex: 3 }}
-            >
-              Stand
-            </Chip>
+            {handWithPrescription.prescription && (
+              <Chip
+                color="primary"
+                startDecorator={<LightbulbOutlined fontSize="small" />}
+                variant="soft"
+                sx={{ zIndex: 3 }}
+              >
+                {handWithPrescription.prescription}
+              </Chip>
+            )}
           </div>
         ))}
       </div>
-      <Card
-        size="sm"
-        sx={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
-      >
-        Player {playerNumber}
-      </Card>
     </div>
   );
 };
