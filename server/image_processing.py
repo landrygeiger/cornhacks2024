@@ -113,6 +113,16 @@ def create_all_intersections_from_image(img):
     intersection_groups.append(intersections)
   return intersection_groups
 
+def get_all_contour_masks(img):
+  contours = get_contours(img)
+  large_enough_contours = filter_contours_by_area(contours, 1000)
+  masks = []
+  for contour in large_enough_contours:
+    contour_mask = create_contour_mask(img, contour)
+    masks.append(contour_mask)
+
+  return masks
+   
 def sort_points_clockwise(points, epsilon=1e-8):
     sorted_points = []
     if len(points) >0:
