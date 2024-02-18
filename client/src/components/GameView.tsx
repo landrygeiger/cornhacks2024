@@ -1,6 +1,6 @@
 import { FC } from "react";
 import DealerHandView from "./DealerHandView";
-import HandView from "./HandView";
+import PlayerView from "./PlayerView";
 import { HandWithPrescription } from "../types";
 
 const p1Hand: HandWithPrescription[] = [
@@ -83,9 +83,9 @@ const GameView: FC = () => {
           margin: 0,
         }}
       >
-        <HandView hands={p1Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <HandView hands={p2Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
-        <HandView hands={p3Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p1Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p2Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
+        <PlayerView hands={p3Hand} style={{ flexGrow: 1, flexBasis: 0 }} />
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const handWidthCssCalcStr = (hand: Hand) =>
 const handHeightCssCalcStr = (hand: Hand) =>
   `calc(${CARD_HEIGHT} + ${hand.length - 1} * ${CARD_SPACING})`;
 
-const HandView: FC<Props> = ({ hands: handWithPrescriptions, style }) => {
+const PlayerView: FC<Props> = ({ hands: handWithPrescriptions, style }) => {
   return (
     <div
       style={{
@@ -79,4 +79,4 @@ const HandView: FC<Props> = ({ hands: handWithPrescriptions, style }) => {
   );
 };
 
-export default HandView;
+export default PlayerView;
