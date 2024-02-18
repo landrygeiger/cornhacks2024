@@ -47,9 +47,7 @@ const App = () => {
           style={{
             display: "inline-block",
             position: "relative",
-            height: "95vh",
-            borderRadius: "15px",
-            // outline: "2px solid black",
+            height: "100%",
             overflow: "hidden",
             backgroundColor: "white",
           }}
