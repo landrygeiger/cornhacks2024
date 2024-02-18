@@ -11,7 +11,7 @@ const App = () => {
 
   useEffect(() => {
     // const ws = new WebSocket("ws://184.105.6.45:4444");
-    const ws = new WebSocket("ws://localhost:4444");
+    const ws = new WebSocket("ws://184.105.6.45:4444");
     ws.onmessage = e => {
       console.log(e);
       setAppState(assimilateUpdatedState(e.data));
