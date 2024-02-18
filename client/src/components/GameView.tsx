@@ -84,13 +84,21 @@ const GameView: FC<Props> = ({ setAppState }) => {
             margin: "0.5em 0.5em",
           }}
         >
-          <TrueCountView trueCount={-3.2} />
+          <TrueCountView
+            trueCount={-3.2}
+            sx={{
+              boxShadow: "0.2em 0.2em 0.2em rgba(0,0,0, .2)",
+            }}
+          />
           <Button
             size="sm"
             color="danger"
             variant="soft"
             startDecorator={<RestartAltOutlined fontSize="small" />}
             onClick={() => setAppState(initialSetupState)}
+            sx={{
+              boxShadow: "0.2em 0.2em 0.2em rgba(0,0,0, .2)",
+            }}
           >
             Reset
           </Button>
