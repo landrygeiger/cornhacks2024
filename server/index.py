@@ -9,7 +9,7 @@ import numpy as np
 import cv2 as cv
 import inference
 
-model = inference.load_roboflow_model("card-classification-ne1gj/1")
+model = inference.get_roboflow_model("card-classification-ne1gj/1")
 
 def zach_func(image):
   return create_prediction_from_image(image)
