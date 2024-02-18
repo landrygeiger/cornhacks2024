@@ -93,7 +93,7 @@ const GameView: FC<Props> = ({ setAppState }) => {
           <Button
             size="sm"
             color="danger"
-            variant="soft"
+            variant="solid"
             startDecorator={<RestartAltOutlined fontSize="small" />}
             onClick={() => setAppState(initialSetupState)}
             sx={{
