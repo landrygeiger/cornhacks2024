@@ -162,10 +162,11 @@ def crop_array(array, percent_height, percent_width):
 def orient_images_from_groups(image, groups):
   images = []
   for group in groups:
-    group = np.array(group, dtype=np.float32)
-    corners = sort_points_clockwise(group)
-    oriented_image = fix_perspective(image,corners)
-    images.append(oriented_image)
+    if len(group) ==4:
+      group = np.array(group, dtype=np.float32)
+      corners = sort_points_clockwise(group)
+      oriented_image = fix_perspective(image,corners)
+      images.append(oriented_image)
   return images
 
 def split_image_into_number_and_suit(card_image):
