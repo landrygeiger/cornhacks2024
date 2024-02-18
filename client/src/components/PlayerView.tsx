@@ -67,7 +67,10 @@ const PlayerView: FC<Props> = ({ hands: handWithPrescriptions, style }) => {
                 color="primary"
                 startDecorator={<LightbulbOutlined fontSize="small" />}
                 variant="soft"
-                sx={{ zIndex: 3 }}
+                sx={{
+                  zIndex: 3,
+                  boxShadow: "0.2em 0.2em 0.2em rgba(0,0,0, .2)",
+                }}
               >
                 {handWithPrescription.prescription}
               </Chip>
