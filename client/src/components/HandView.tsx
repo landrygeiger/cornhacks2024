@@ -1,8 +1,8 @@
 import { CSSProperties, FC } from "react";
 import { Hand } from "../types";
 
-const CARD_WIDTH = "5vw";
-const CARD_HEIGHT = "7.12vw";
+const CARD_WIDTH = "7vw";
+const CARD_HEIGHT = "9.96vw";
 const CARD_SPACING = "1vw";
 
 type Props = {
