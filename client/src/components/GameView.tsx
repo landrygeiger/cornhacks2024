@@ -14,11 +14,6 @@ const p1Hand: Hand[] = [
     { suit: "clubs", rank: "queen" },
     { suit: "diamonds", rank: "jack" },
   ],
-  [
-    { suit: "clubs", rank: "queen" },
-    { suit: "diamonds", rank: "jack" },
-    { suit: "hearts", rank: 3 },
-  ],
 ];
 
 const p2Hand: Hand[] = [
