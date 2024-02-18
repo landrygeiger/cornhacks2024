@@ -26,6 +26,7 @@ def get_contours(image):
   # Again finding the final contours and drawing them on the image.
   cont, hier = cv.findContours(newthresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
 
+  
 
   return cont
 
@@ -60,11 +61,11 @@ def find_edges(image):
   n = 30
   while not all_lines_found and n > 0:
     edges = cv.Canny(np.uint8(image), 50, 150, apertureSize=3)
-    lines = cv.HoughLinesP(edges, 1, np.pi/180, threshold=75, minLineLength=50, maxLineGap=25)
+    lines = cv.HoughLinesP(edges, 1, np.pi/180, threshold=50, minLineLength=25, maxLineGap=25)
     if lines is not None:
       x1, y1, x2, y2 = lines[0][0]
       (save_point_1, save_point_2) = extend_line((x1, y1), (x2, y2))
-      cv.line(image, save_point_1, save_point_2, (0, 0, 0), 30)
+      cv.line(image, save_point_1, save_point_2, (0, 0, 0), 4)
 
       line_bag.append((save_point_1,save_point_2))
       n= n-1
@@ -73,13 +74,6 @@ def find_edges(image):
 
   return line_bag
 
-def create_extended_lines_image(lines):
-  extended_lines_image = np.zeros(shape=(img.shape))
-
-  for line in lines:
-    ((x1, y1), (x2, y2)) = line
-    cv.line(extended_lines_image, (x1, y1), (x2, y2), (0, 255, 0), 6)
-  return extended_lines_image
 
 def is_within_image(point, image_shape):
     return 0 <= point[0] < image_shape[1] and 0 <= point[1] < image_shape[0]
@@ -110,7 +104,7 @@ def find_intersections(lines, image_shape):
 
 def create_all_intersections_from_image(img):
   contours = get_contours(img)
-  large_enough_contours = filter_contours_by_area(contours, 200000)
+  large_enough_contours = filter_contours_by_area(contours, 10000)
   intersection_groups = []
   for contour in large_enough_contours:
     contour_mask = create_contour_mask(img, contour)
@@ -119,21 +113,27 @@ def create_all_intersections_from_image(img):
     intersection_groups.append(intersections)
   return intersection_groups
 
-def sort_points_clockwise(points):
-    # Convert points to NumPy array
-    points = np.array(points)
+def sort_points_clockwise(points, epsilon=1e-8):
+    sorted_points = []
+    if len(points) >0:
+      # Convert points to NumPy array
+      points = np.array(points)
 
-    # Calculate centroid (mean of all points)
-    centroid = np.mean(points, axis=0)
+      # Calculate centroid (mean of all points)
+      centroid = np.mean(points, axis=0)
 
-    # Calculate angles of points with respect to centroid
-    angles = np.arctan2(points[:,1] - centroid[1], points[:,0] - centroid[0])
+      # Calculate angles of points with respect to centroid
+      delta_y = points[:, 1] - centroid[1]
+      delta_x = points[:, 0] - centroid[0]
+      
+      # Add epsilon to denominator to avoid division by zero
+      angles = np.arctan2(delta_y, delta_x + epsilon)
 
-    # Sort points based on angles
-    sorted_indices = np.argsort(angles)
+      # Sort points based on angles
+      sorted_indices = np.argsort(angles)
 
-    # Rearrange points in clockwise order
-    sorted_points = points[sorted_indices]
+      # Rearrange points in clockwise order
+      sorted_points = points[sorted_indices]
 
     return sorted_points
 
@@ -161,10 +161,11 @@ def crop_array(array, percent_height, percent_width):
 def orient_images_from_groups(image, groups):
   images = []
   for group in groups:
-    group = np.array(group, dtype=np.float32)
-    corners = sort_points_clockwise(group)
-    oriented_image = fix_perspective(image,corners)
-    images.append(oriented_image)
+    if len(group) ==4:
+      group = np.array(group, dtype=np.float32)
+      corners = sort_points_clockwise(group)
+      oriented_image = fix_perspective(image,corners)
+      images.append(oriented_image)
   return images
 
 def split_image_into_number_and_suit(card_image):
@@ -257,8 +258,6 @@ def create_prediction_from_image(image):
   }
 
   intersection_groups= create_all_intersections_from_image(image)
-
-  print(len(intersection_groups))
   images= orient_images_from_groups(image,intersection_groups)
   results = []
   for img in images:
@@ -266,5 +265,4 @@ def create_prediction_from_image(image):
     classification = identify_label_from_list(crop_img,cards)
     results.append(classification)
   return results
-
 
