@@ -108,7 +108,7 @@ const rankToValue = (aceHigh: boolean) => (rank: Rank) =>
     .with(P.string, () => 10)
     .exhaustive();
 
-const simplifyRank = (rank: Rank): SimplifiedRank =>
+export const simplifyRank = (rank: Rank): SimplifiedRank =>
   match(rank)
     .with(10, "jack", "king", "queen", () => "ten" as const)
     .with(P.number, x => x)
@@ -328,7 +328,14 @@ function getSoftHand(hand: Hand): number | null {
   return null; // No soft Ace in hand
 }
 
-const prescribeHand = (
+export const getTrueCount = (numDecks: number, cardsSeen: Card[]) => {
+  const numDecksLeft = (numDecks * 52 - cardsSeen.length) / 52;
+  const rc = M.concatAll(N.MonoidSum)(cardsSeen.map(cardToCountVal));
+  const tc = rc / numDecksLeft;
+  return tc;
+};
+
+export const prescribeHand = (
   hand: Hand,
   numDecks: number,
   cardsSeen: Card[],

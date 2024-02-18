@@ -45,7 +45,7 @@ const App = () => {
           {appState.kind === "setup" ? (
             <DeckCountSelector appState={appState} setAppState={setAppState} />
           ) : (
-            <GameView setAppState={setAppState} />
+            <GameView appState={appState} setAppState={setAppState} />
           )}
         </div>
       </div>
