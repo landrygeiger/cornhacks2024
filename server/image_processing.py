@@ -174,6 +174,28 @@ def split_image_into_number_and_suit(card_image):
     suit_image = card_image[split_pos:, :]
     return number_image, suit_image
 
+def identify_label_from_list(card_image, template_images):
+    # Initialize variables to keep track of the best match
+    best_match = None
+    best_match_score = float('inf')
+    
+    # Convert card image to grayscale
+    card_gray = cv.cvtColor(card_image, cv.COLOR_BGR2GRAY)
+    
+    # Iterate over template images
+    for label, template_image in template_images.items():
+        # Match template to card image
+        result = cv.matchTemplate(card_gray, template_image, cv.TM_SQDIFF_NORMED)
+        
+        # Get the minimum squared difference value
+        min_val, _, min_loc, _ = cv.minMaxLoc(result)
+        
+        # Update best match if this is the closest match so far
+        if min_val < best_match_score:
+            best_match_score = min_val
+            best_match = label
+    
+    return best_match
 
 cards = {
     'AH': cv.imread('./templates/hearts/AH.png', cv.IMREAD_GRAYSCALE),
