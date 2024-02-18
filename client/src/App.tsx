@@ -42,6 +42,7 @@ const App = () => {
             display: "inline-block",
             position: "relative",
             height: "100vh",
+            backgroundColor: "white",
           }}
         >
           <Video videoRef={videoRef} />
