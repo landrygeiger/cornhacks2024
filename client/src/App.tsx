@@ -35,12 +35,22 @@ const App = () => {
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <div
           style={{
             display: "inline-block",
             position: "relative",
-            height: "100vh",
+            height: "95vh",
+            borderRadius: "15px",
+            // outline: "2px solid black",
+            overflow: "hidden",
           }}
         >
           <Video videoRef={videoRef} />
