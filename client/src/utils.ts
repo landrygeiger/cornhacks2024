@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { AppState } from "./types";
+import { AppState, Card, EncodedFrame } from "./types";
 
 export const initialPlayState = (numDecks: number): AppState => ({
   kind: "play",
@@ -22,3 +22,28 @@ export const incrementNumDecksBy =
         ? { ...s, numDecks: s.numDecks + count }
         : s,
     );
+
+const stabilize = (frame: EncodedFrame): EncodedFrame => {
+  return frame;
+};
+
+const getNewCards =
+  (newData: EncodedFrame) =>
+  (currAppState: AppState): Card[] => {
+    throw null;
+  };
+
+export const assimilateUpdatedState =
+  (newData: EncodedFrame) =>
+  (currAppState: AppState): AppState => {
+    if (currAppState.kind === "setup") return currAppState;
+    const stabilizedUpdate = stabilize(newData);
+    const newCards = getNewCards(stabilizedUpdate)(currAppState);
+    const newAppState: AppState = {
+      kind: "play",
+      cardsSeen: [...currAppState.cardsSeen, ...newCards],
+      numDecks: currAppState.numDecks,
+      simulatedGameState: stabilizedUpdate,
+    };
+    return newAppState;
+  };

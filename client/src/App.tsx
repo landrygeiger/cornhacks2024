@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Video } from "./components/Video";
 import { AppState } from "./types";
 import {
+  assimilateUpdatedState,
   incrementNumDecksBy,
   initialPlayState,
   initialSetupState,
@@ -14,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:4444");
-    ws.onmessage = console.log;
+    ws.onmessage = e => setAppState(assimilateUpdatedState(e.data));
 
     navigator.mediaDevices
       .getUserMedia({ video: { facingMode: "environment" } })
@@ -24,7 +25,7 @@ const App = () => {
 
         const mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.ondataavailable = e => {
-          if (e.data.size > 0) {
+          if (e.data.size > 0 && appState.kind === "play") {
             e.data.arrayBuffer().then(x => ws.send(x));
           }
         };
@@ -35,21 +36,12 @@ const App = () => {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <div
           style={{
             display: "inline-block",
             position: "relative",
-            height: "100%",
-            overflow: "hidden",
-            backgroundColor: "white",
+            height: "100vh",
           }}
         >
           <Video videoRef={videoRef} />
