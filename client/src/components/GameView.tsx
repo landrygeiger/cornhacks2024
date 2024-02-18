@@ -1,34 +1,46 @@
 import { FC } from "react";
 import DealerHandView from "./DealerHandView";
 import HandView from "./HandView";
-import { Hand } from "../types";
+import { HandWithPrescription } from "../types";
 
-const p1Hand: Hand[] = [
-  [
-    { suit: "diamonds", rank: "king" },
-    { suit: "hearts", rank: 5 },
-    { suit: "clubs", rank: "ace" },
-    { suit: "diamonds", rank: 8 },
-  ],
-  [
-    { suit: "clubs", rank: "queen" },
-    { suit: "diamonds", rank: "jack" },
-  ],
+const p1Hand: HandWithPrescription[] = [
+  {
+    hand: [
+      { suit: "diamonds", rank: "king" },
+      { suit: "hearts", rank: 5 },
+      { suit: "clubs", rank: "ace" },
+      { suit: "diamonds", rank: 8 },
+    ],
+    prescription: "stand",
+  },
+  {
+    hand: [
+      { suit: "clubs", rank: "queen" },
+      { suit: "diamonds", rank: "jack" },
+    ],
+    prescription: "hit",
+  },
 ];
 
-const p2Hand: Hand[] = [
-  [
-    { suit: "hearts", rank: "ace" },
-    { suit: "spades", rank: 8 },
-  ],
+const p2Hand: HandWithPrescription[] = [
+  {
+    hand: [
+      { suit: "hearts", rank: "ace" },
+      { suit: "spades", rank: 8 },
+    ],
+    prescription: "double down",
+  },
 ];
 
-const p3Hand: Hand[] = [
-  [
-    { suit: "diamonds", rank: 3 },
-    { suit: "clubs", rank: "queen" },
-    { suit: "hearts", rank: 9 },
-  ],
+const p3Hand: HandWithPrescription[] = [
+  {
+    hand: [
+      { suit: "diamonds", rank: 3 },
+      { suit: "clubs", rank: "queen" },
+      { suit: "hearts", rank: 9 },
+    ],
+    prescription: "split",
+  },
 ];
 
 const GameView: FC = () => {
@@ -46,15 +58,22 @@ const GameView: FC = () => {
         margin: 0,
       }}
     >
-      <DealerHandView
-        hand={p1Hand[0]}
+      <div
         style={{
           marginLeft: "auto",
           marginRight: "auto",
           flexGrow: 1,
           flexBasis: 0,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
         }}
-      />
+      >
+        <div style={{ display: "flex" }}>
+          <DealerHandView hand={p1Hand[0].hand} />
+        </div>
+      </div>
       <div
         style={{
           display: "flex",

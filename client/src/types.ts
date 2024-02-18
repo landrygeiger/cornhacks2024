@@ -27,3 +27,10 @@ export type AppState =
       cardsSeen: Card[];
       simulatedGameState: SimulatedGameState;
     };
+
+export type Prescription = "stand" | "split" | "hit" | "double down";
+
+export type HandWithPrescription = {
+  hand: Hand;
+  prescription: Prescription | undefined;
+};
