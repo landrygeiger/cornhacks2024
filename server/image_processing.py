@@ -1,5 +1,6 @@
 import cv2 as cv
 import numpy as np
+from Pillow import Image
 
 def get_contours(image):
 
@@ -165,3 +166,23 @@ def orient_images_from_groups(image, groups):
     oriented_image = fix_perspective(image,corners)
     images.append(oriented_image)
   return images
+
+def save_arrays_as_jpgs(arrays, directory, suit):
+    """
+    Save a list of numpy arrays as JPEG images.
+
+    Args:
+        arrays (list of numpy arrays): List of numpy arrays representing images.
+        directory (str): Directory where the images will be saved.
+    """
+    # Ensure directory ends with a slash
+    if not directory.endswith('/'):
+        directory += '/'
+
+    # Iterate over the arrays and save them as JPEGs
+    for i, array in enumerate(arrays):
+        # Convert array to PIL Image
+        image = Image.fromarray(array)
+
+        # Save image as JPEG
+        image.save(f"{directory}{i}{suit}.jpg")
