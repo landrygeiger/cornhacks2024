@@ -27,7 +27,7 @@ const DeckCountSelector: FC<Props> = ({ appState, setAppState }) => {
       }}
     >
       <Card sx={{ minWidth: "25em", gap: "1.25em" }}>
-        <Typography level="h1">Black Jack Optimal</Typography>
+        <Typography level="h3">Black Jack Optimal</Typography>
         <Typography>How many decks will you be playing with?</Typography>
         <Stack direction="row" alignItems="center" gap={"1em"}>
           <Button
