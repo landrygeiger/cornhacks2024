@@ -4,6 +4,9 @@ from PIL import Image
 import base64
 import io
 
+def zach_func(image):
+  return []
+
 def get_data_from_image(image_bytes):
     # Convert the image bytes to a PIL Image object
     img = Image.open(io.BytesIO(image_bytes))
@@ -29,13 +32,13 @@ def get_data_from_image(image_bytes):
     p3_left_img = img.crop(p3_left)
     p3_right_img = img.crop(p3_right)
 
-    dealer_img.save("dealer.jpg")
-    p1_left_img.save("p1_left.jpg")
-    p1_right_img.save("p1_right.jpg")
-    p2_left_img.save("p2_left.jpg")
-    p2_right_img.save("p2_right.jpg")
-    p3_left_img.save("p3_left.jpg")
-    p3_right_img.save("p3_right.jpg")
+    dealer_cards = zach_func(dealer_img)
+    p1_left_cards = zach_func(p1_left_img)
+    p1_right_cards = zach_func(p1_right_img)
+    p2_left_cards = zach_func(p2_left_img)
+    p2_right_cards = zach_func(p2_right_img)
+    p3_left_cards = zach_func(p3_left_img)
+    p3_right_cards = zach_func(p3_right_img)
 
 async def get_data(websocket):
     async for message in websocket:
