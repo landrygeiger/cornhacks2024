@@ -11,6 +11,8 @@ const App = () => {
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:4444");
+    // ws.onmessage = e => setAppState(assimilateUpdatedState(e.data));
+    ws.onmessage = console.log;
 
     navigator.mediaDevices
       .getUserMedia({ video: { facingMode: "environment" } })
@@ -73,7 +75,7 @@ const App = () => {
           {appState.kind === "setup" ? (
             <DeckCountSelector appState={appState} setAppState={setAppState} />
           ) : (
-            <GameView setAppState={setAppState} />
+            <GameView appState={appState} setAppState={setAppState} />
           )}
         </div>
       </div>
