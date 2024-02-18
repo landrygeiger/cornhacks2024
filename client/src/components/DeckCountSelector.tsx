@@ -32,6 +32,7 @@ const DeckCountSelector: FC<Props> = ({ appState, setAppState }) => {
         <Stack direction="row" alignItems="center" gap={"1em"}>
           <Button
             variant="outlined"
+            disabled={appState.numDecks === 1}
             onClick={() => incrementNumDecksBy(setAppState)(-1)}
           >
             -
@@ -48,7 +49,7 @@ const DeckCountSelector: FC<Props> = ({ appState, setAppState }) => {
               onClick={() => setAppState(initialPlayState(appState.numDecks))}
               sx={{ marginLeft: "auto", display: "block" }}
             >
-              start
+              Start
             </Button>
           </Box>
         </Stack>
