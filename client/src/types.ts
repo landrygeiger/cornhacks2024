@@ -31,7 +31,12 @@ export type PlayAppState = {
   simulatedGameState: SimulatedGameState;
 };
 
-export type Prescription = "stand" | "split" | "hit" | "double down";
+export type Prescription =
+  | "stand"
+  | "split"
+  | "hit"
+  | "double/hit"
+  | "double/stand";
 
 export type HandWithPrescription = {
   hand: Hand;
