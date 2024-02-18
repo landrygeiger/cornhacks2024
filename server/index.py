@@ -44,10 +44,10 @@ def landry_func(image_bytes):
     p3_cards = model.infer(image="./p3.jpg")
 
     return {
-      "dealer": dealer_cards,
-      "player1": p1_cards,
-      "player2": p2_cards,
-      "player3": p3_cards,
+      "dealer": dealer_cards.predictions,
+      "player1": p1_cards.predictions,
+      "player2": p2_cards.predictions,
+      "player3": p3_cards.predictions,
     }
 
 def get_data_from_image(image_bytes):
