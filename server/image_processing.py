@@ -136,33 +136,7 @@ def sort_points_clockwise(points):
 
     return sorted_points
 
-def find_corners(points):
 
-    # Calculate centroid (mean of all points)
-    centroid = np.mean(points, axis=0)
-
-    # Calculate angles of points with respect to centroid
-    angles = np.arctan2(points[:, 1] - centroid[1], points[:, 0] - centroid[0])
-
-    # Group points into four quadrants based on angles
-    quadrants = [[] for _ in range(4)]
-    for i, angle in enumerate(angles):
-        if angle < -np.pi / 2:
-            quadrants[0].append(points[i])
-        elif angle < 0:
-            quadrants[1].append(points[i])
-        elif angle < np.pi / 2:
-            quadrants[2].append(points[i])
-        else:
-            quadrants[3].append(points[i])
-
-    # Find farthest point from centroid in each quadrant (corners)
-    corners = [max(quadrant, key=lambda x: np.linalg.norm(x - centroid)) for quadrant in quadrants]
-
-    # Sort corners in clockwise order
-    sorted_corners = sorted(corners, key=lambda x: np.arctan2(x[1] - centroid[1], x[0] - centroid[0]))
-
-    return np.float32(sorted_corners)
 def fix_perspective(img, corners):
     # Define the desired rectangle after transformation
     width = 200  # define your desired width
