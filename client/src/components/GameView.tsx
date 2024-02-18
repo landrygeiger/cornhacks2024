@@ -2,6 +2,7 @@ import { FC } from "react";
 import DealerHandView from "./DealerHandView";
 import HandView from "./HandView";
 import { Hand } from "../types";
+import { Card } from "@mui/joy";
 
 const p1Hand: Hand[] = [
   [
@@ -46,15 +47,23 @@ const GameView: FC = () => {
         margin: 0,
       }}
     >
-      <DealerHandView
-        hand={p1Hand[0]}
+      <div
         style={{
           marginLeft: "auto",
           marginRight: "auto",
           flexGrow: 1,
           flexBasis: 0,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
         }}
-      />
+      >
+        <Card>Dealer</Card>
+        <div style={{ display: "flex" }}>
+          <DealerHandView hand={p1Hand[0]} />
+        </div>
+      </div>
       <div
         style={{
           display: "flex",
