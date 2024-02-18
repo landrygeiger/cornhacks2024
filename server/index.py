@@ -42,7 +42,7 @@ async def get_data(websocket):
         get_data_from_image(message)
 
 async def main():
-    async with serve(echo, "localhost", 4444):
+    async with serve(get_data, "localhost", 4444):
         await asyncio.Future()
 
 print("starting server")
