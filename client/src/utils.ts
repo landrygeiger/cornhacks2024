@@ -30,7 +30,7 @@ const stabilize = (frame: EncodedFrame): EncodedFrame => {
   return frame;
 };
 
-const getCards = (data: EncodedFrame) =>
+export const getCards = (data: EncodedFrame) =>
   pipe(
     data.dealer,
     A.concat(A.flatten(data.player1)),
@@ -49,26 +49,27 @@ const indexOfCard = (card: Card) =>
 
 const removeOneCardInstance = (card: Card) => (cards: Card[]) => {
   const i = indexOfCard(card)(cards);
-  return i ? cards.splice(i, 1) : cards;
+  return i !== undefined ? cards.slice(0, i).concat(cards.slice(i + 1)) : cards;
 };
 
-const getNewCards =
+export const findNewCards =
+  (cardsToCheck: Card[]) =>
+  (currCards: Card[]): Card[] => {
+    console.log(cardsToCheck, currCards);
+    if (currCards.length === 0) {
+      return cardsToCheck;
+    }
+
+    return findNewCards(removeOneCardInstance(currCards[0])(cardsToCheck))(
+      currCards.slice(1),
+    );
+  };
+
+export const getNewCards =
   (newData: EncodedFrame) =>
   (currAppState: PlayAppState): Card[] => {
     const newDataCards = getCards(newData);
     const currSimulatedCards = getCards(currAppState.simulatedGameState);
-
-    const findNewCards =
-      (cardsToCheck: Card[]) =>
-      (currCards: Card[]): Card[] => {
-        if (currCards.length === 0) {
-          return cardsToCheck;
-        }
-
-        return findNewCards(removeOneCardInstance(currCards[0])(cardsToCheck))(
-          currCards.slice(1),
-        );
-      };
 
     return findNewCards(newDataCards)(currSimulatedCards);
   };
